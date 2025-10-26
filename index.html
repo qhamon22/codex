@@ -7,66 +7,71 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <!-- Header avec diaporama d'images -->
-    <header class="header-section">
-        <div class="slideshow">
-            <div class="slide active" style="background-image: url('./img/bird.jpg');"></div>
-            <div class="slide" style="background-image: url('./img/papillon.jpg');"></div>
-            <div class="slide" style="background-image: url('./img/succisa.jpg');"></div>
-        </div>
-        <div class="header-content">
-            <h1 class="codex-title">Codex</h1>
-            <p class="subtitle">Votre sous-titre ici</p>
-        </div>
-    </header>
-
-    <!-- Section cours avec 6 tuiles -->
-    <section class="courses-section">
-        <div class="container">
-            <h2 class="section-title">Mes Cours</h2>
-            <div class="tiles-grid">
-                <a href="#" class="course-tile">
-                    <h3>Cours 1</h3>
-                    <p>Description du cours</p>
-                </a>
-                <a href="#" class="course-tile">
-                    <h3>Cours 2</h3>
-                    <p>Description du cours</p>
-                </a>
-                <a href="#" class="course-tile">
-                    <h3>Cours 3</h3>
-                    <p>Description du cours</p>
-                </a>
-                <a href="#" class="course-tile">
-                    <h3>Cours 4</h3>
-                    <p>Description du cours</p>
-                </a>
-                <a href="#" class="course-tile">
-                    <h3>Cours 5</h3>
-                    <p>Description du cours</p>
-                </a>
-                <a href="#" class="course-tile">
-                    <h3>Cours 6</h3>
-                    <p>Description du cours</p>
-                </a>
+    <div class="sections-container">
+        <!-- Header avec diaporama -->
+        <section class="fullpage-section header-section">
+            <div class="slideshow">
+                <div class="slide active" style="background-image: url('./img/bird.jpg');"></div>
+                <div class="slide" style="background-image: url('./img/papillon.jpg');"></div>
+                <div class="slide" style="background-image: url('./img/succisa.jpg');"></div>
             </div>
-        </div>
-    </section>
-
-    <!-- Section contact -->
-    <section class="contact-section">
-        <div class="container">
-            <h2 class="section-title">Contact</h2>
-            <div class="contact-links">
-                <a href="#" class="contact-link linkedin">
-                    <span>LinkedIn</span>
-                </a>
-                <a href="mailto:votre@email.com" class="contact-link email">
-                    <span>Email</span>
-                </a>
+            <div class="header-content">
+                <h1 class="codex-title">Codex</h1>
+                <p class="subtitle">Votre sous-titre ici</p>
             </div>
-        </div>
-    </section>
+            <div class="scroll-indicator">
+                <span>↓</span>
+            </div>
+        </section>
+
+        <!-- Section cours -->
+        <section class="fullpage-section courses-section">
+            <div class="container">
+                <h2 class="section-title">Mes Cours</h2>
+                <div class="tiles-grid">
+                    <a href="#" class="course-tile">
+                        <h3>Cours 1</h3>
+                        <p>Description du cours</p>
+                    </a>
+                    <a href="#" class="course-tile">
+                        <h3>Cours 2</h3>
+                        <p>Description du cours</p>
+                    </a>
+                    <a href="#" class="course-tile">
+                        <h3>Cours 3</h3>
+                        <p>Description du cours</p>
+                    </a>
+                    <a href="#" class="course-tile">
+                        <h3>Cours 4</h3>
+                        <p>Description du cours</p>
+                    </a>
+                    <a href="#" class="course-tile">
+                        <h3>Cours 5</h3>
+                        <p>Description du cours</p>
+                    </a>
+                    <a href="#" class="course-tile">
+                        <h3>Cours 6</h3>
+                        <p>Description du cours</p>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section contact -->
+        <section class="fullpage-section contact-section">
+            <div class="container">
+                <h2 class="section-title">Contact</h2>
+                <div class="contact-links">
+                    <a href="#" class="contact-link linkedin">
+                        <span>LinkedIn</span>
+                    </a>
+                    <a href="mailto:votre@email.com" class="contact-link email">
+                        <span>Email</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+    </div>
 
     <!-- Bouton remontée -->
     <button class="scroll-to-top" id="scrollToTop">↑</button>

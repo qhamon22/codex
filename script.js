@@ -1,4 +1,4 @@
-// Diaporama pour le header
+// Diaporama simplifié pour le header
 class Slideshow {
     constructor() {
         this.slides = document.querySelectorAll('.slide');
@@ -14,7 +14,7 @@ class Slideshow {
         // Démarrer le diaporama
         this.startSlideshow();
         
-        // Optionnel: redémarrer le diaporama si la page devient visible
+        // Gérer la visibilité de la page
         document.addEventListener('visibilitychange', () => {
             if (document.hidden) {
                 this.stopSlideshow();
@@ -25,12 +25,11 @@ class Slideshow {
     }
 
     showSlide(index) {
-        // Retirer la classe active de toutes les slides
+        // Cacher toutes les slides
         this.slides.forEach(slide => slide.classList.remove('active'));
         
-        // Ajouter la classe active à la slide courante
+        // Afficher la slide courante
         this.slides[index].classList.add('active');
-        
         this.currentSlide = index;
     }
 
@@ -40,10 +39,10 @@ class Slideshow {
     }
 
     startSlideshow() {
-        this.stopSlideshow(); // Arrêter l'intervalle existant
+        this.stopSlideshow();
         this.slideInterval = setInterval(() => {
             this.nextSlide();
-        }, 8000); //  secondes
+        }, 10000); // 10 secondes
     }
 
     stopSlideshow() {
@@ -54,45 +53,137 @@ class Slideshow {
     }
 }
 
-// Animation au défilement
-function checkScroll() {
-    const sections = document.querySelectorAll('section');
+// Gestion du défilement par sections
+class SectionScroll {
+    constructor() {
+        this.sections = document.querySelectorAll('.fullpage-section');
+        this.currentSection = 0;
+        this.isScrolling = false;
+        this.scrollTimeout = null;
+        this.init();
+    }
+
+    init() {
+        // Activer la première section
+        this.activateSection(0);
+        
+        // Écouter le défilement
+        this.setupScrollHandling();
+        
+        // Écouter la roue de souris
+        this.setupWheelHandling();
+    }
+
+    setupScrollHandling() {
+        const container = document.querySelector('.sections-container');
+        
+        container.addEventListener('scroll', () => {
+            if (!this.isScrolling) {
+                this.handleScroll();
+            }
+        });
+    }
+
+    setupWheelHandling() {
+        const container = document.querySelector('.sections-container');
+        
+        container.addEventListener('wheel', (e) => {
+            e.preventDefault();
+            
+            if (this.isScrolling) return;
+            
+            if (e.deltaY > 0) {
+                this.nextSection();
+            } else {
+                this.previousSection();
+            }
+        }, { passive: false });
+    }
+
+    handleScroll() {
+        const container = document.querySelector('.sections-container');
+        const scrollTop = container.scrollTop;
+        const sectionHeight = window.innerHeight;
+        const newSection = Math.round(scrollTop / sectionHeight);
+        
+        if (newSection !== this.currentSection) {
+            this.activateSection(newSection);
+        }
+    }
+
+    activateSection(index) {
+        if (index < 0 || index >= this.sections.length) return;
+        
+        this.currentSection = index;
+        
+        this.sections.forEach((section, i) => {
+            if (i === index) {
+                section.classList.add('active');
+            } else {
+                section.classList.remove('active');
+            }
+        });
+    }
+
+    nextSection() {
+        if (this.currentSection < this.sections.length - 1) {
+            this.scrollToSection(this.currentSection + 1);
+        }
+    }
+
+    previousSection() {
+        if (this.currentSection > 0) {
+            this.scrollToSection(this.currentSection - 1);
+        }
+    }
+
+    scrollToSection(index) {
+        if (this.isScrolling || index < 0 || index >= this.sections.length) return;
+        
+        this.isScrolling = true;
+        const container = document.querySelector('.sections-container');
+        const targetScroll = index * window.innerHeight;
+        
+        container.scrollTo({
+            top: targetScroll,
+            behavior: 'smooth'
+        });
+        
+        this.activateSection(index);
+        
+        // Réactiver le défilement après l'animation
+        setTimeout(() => {
+            this.isScrolling = false;
+        }, 800);
+    }
+}
+
+// Animation au défilement pour les éléments internes
+function checkInternalAnimations() {
     const tiles = document.querySelectorAll('.course-tile');
     const contactLinks = document.querySelectorAll('.contact-link');
     const scrollButton = document.getElementById('scrollToTop');
+    const currentSection = document.querySelector('.fullpage-section.active');
 
-    // Animation des sections
-    sections.forEach(section => {
-        const sectionTop = section.getBoundingClientRect().top;
-        const windowHeight = window.innerHeight;
-        
-        if (sectionTop < windowHeight * 0.85) {
-            section.classList.add('visible');
-        }
-    });
+    // Animation des tuiles de cours (seulement dans la section active)
+    if (currentSection && currentSection.classList.contains('courses-section')) {
+        tiles.forEach(tile => {
+            tile.style.opacity = '1';
+            tile.style.transform = 'translateY(0)';
+        });
+    }
 
-    // Animation des tuiles de cours
-    tiles.forEach(tile => {
-        const tileTop = tile.getBoundingClientRect().top;
-        const windowHeight = window.innerHeight;
-        
-        if (tileTop < windowHeight * 0.85) {
-            tile.classList.add('visible');
-        }
-    });
-
-    // Animation des liens de contact
-    contactLinks.forEach(link => {
-        const linkTop = link.getBoundingClientRect().top;
-        const windowHeight = window.innerHeight;
-        
-        if (linkTop < windowHeight * 0.85) {
-            link.classList.add('visible');
-        }
-    });
+    // Animation des liens de contact (seulement dans la section active)
+    if (currentSection && currentSection.classList.contains('contact-section')) {
+        contactLinks.forEach(link => {
+            link.style.opacity = '1';
+            link.style.transform = 'translateY(0)';
+        });
+    }
 
     // Bouton de remontée
-    if (window.pageYOffset > 300) {
+    const container = document.querySelector('.sections-container');
+    if (container.scrollTop > 300) {
         scrollButton.classList.add('visible');
     } else {
         scrollButton.classList.remove('visible');
@@ -101,18 +192,22 @@ function checkScroll() {
 
 // Initialisation
 document.addEventListener('DOMContentLoaded', function() {
-    // Démarrer le diaporama
+    // Démarrer le diaporama simplifié
     new Slideshow();
-
-    // Écouteur de défilement
-    window.addEventListener('scroll', checkScroll);
     
-    // Vérifier la position au chargement
-    checkScroll();
+    // Démarrer le défilement par sections
+    new SectionScroll();
+    
+    // Écouteur pour les animations internes
+    const container = document.querySelector('.sections-container');
+    container.addEventListener('scroll', checkInternalAnimations);
+    
+    // Vérifier les animations au chargement
+    setTimeout(checkInternalAnimations, 1000);
 
     // Bouton de remontée
     document.getElementById('scrollToTop').addEventListener('click', function() {
-        window.scrollTo({
+        document.querySelector('.sections-container').scrollTo({
             top: 0,
             behavior: 'smooth'
         });
