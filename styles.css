@@ -7,18 +7,142 @@
 
 body {
     font-family: 'Arial', sans-serif;
-    background-color: #f8f9fa;
-    min-height: 100vh;
+    line-height: 1.6;
+}
+
+/* Header avec photo de fond */
+.header-section {
+    background-image: url('/img/your-photo.jpg');
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
+    color: white;
+    text-align: center;
+}
+
+.header-content {
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 2rem;
+    border-radius: 10px;
 }
 
 .codex-title {
-    color: #000000; /* Noir */
+    color: #ffffff;
     text-align: center;
     font-size: 4rem;
     font-weight: bold;
     text-transform: uppercase;
     letter-spacing: 3px;
+    margin-bottom: 1rem;
+}
+
+.subtitle {
+    font-size: 1.5rem;
+    opacity: 0.9;
+}
+
+/* Section cours */
+.courses-section {
+    padding: 4rem 0;
+    background-color: #f8f9fa;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+.courses-section h2 {
+    text-align: center;
+    margin-bottom: 3rem;
+    font-size: 2.5rem;
+    color: #333;
+}
+
+.tiles-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+}
+
+.tile {
+    background: white;
+    padding: 3rem 2rem;
+    text-align: center;
+    text-decoration: none;
+    color: #333;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.tile:hover {
+    transform: translateY(-5px);
+}
+
+/* Section contact */
+.contact-section {
+    padding: 4rem 0;
+    background-color: #fff;
+}
+
+.contact-section h2 {
+    text-align: center;
+    margin-bottom: 3rem;
+    font-size: 2.5rem;
+    color: #333;
+}
+
+.contact-links {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+}
+
+.contact-link {
+    padding: 1rem 2rem;
+    background-color: #0077b5;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.contact-link:hover {
+    background-color: #005582;
+}
+
+/* Bouton remontée */
+.scroll-to-top {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    background-color: #333;
+    color: white;
+    border: none;
+    padding: 1rem;
+    border-radius: 50%;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.scroll-to-top.visible {
+    opacity: 1;
+}
+
+/* Animations de défilement */
+.section-hidden {
+    opacity: 0;
+    transform: translateY(50px);
+    transition: all 0.8s ease;
+}
+
+.section-visible {
+    opacity: 1;
+    transform: translateY(0);
 }
