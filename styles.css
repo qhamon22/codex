@@ -1,148 +1,234 @@
-/* Reset de base */
+/* Reset et base */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 body {
-    font-family: 'Arial', sans-serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     line-height: 1.6;
+    color: #333;
+    overflow-x: hidden;
 }
 
 /* Header avec photo de fond */
 .header-section {
-    background-image: url('/img/bird.jpg');
-    background-size: cover;
-    background-position: center;
     height: 100vh;
+    background: 
+        linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.3)),
+        url('img/bird.jpg') center/cover no-repeat;
     display: flex;
-    justify-content: center;
     align-items: center;
-    color: white;
-    text-align: center;
+    justify-content: center;
+    position: relative;
 }
 
 .header-content {
-    background-color: rgba(0, 0, 0, 0.5);
-    padding: 2rem;
-    border-radius: 10px;
+    text-align: center;
+    color: white;
 }
 
 .codex-title {
-    color: #ffffff;
-    text-align: center;
-    font-size: 4rem;
-    font-weight: bold;
-    text-transform: uppercase;
-    letter-spacing: 3px;
+    font-size: 4.5rem;
+    font-weight: 700;
     margin-bottom: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    color: #ffffff;
+    opacity: 0;
+    transform: translateY(30px);
+    animation: fadeInUp 1s ease 0.5s forwards;
 }
 
 .subtitle {
     font-size: 1.5rem;
-    opacity: 0.9;
+    opacity: 0;
+    transform: translateY(30px);
+    animation: fadeInUp 1s ease 0.8s forwards;
 }
 
-/* Section cours */
-.courses-section {
-    padding: 4rem 0;
-    background-color: #f8f9fa;
+/* Sections générales */
+section {
+    padding: 80px 0;
+    opacity: 0;
+    transform: translateY(50px);
+    transition: all 0.8s ease;
+}
+
+section.visible {
+    opacity: 1;
+    transform: translateY(0);
 }
 
 .container {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 0 2rem;
+    padding: 0 20px;
 }
 
-.courses-section h2 {
+.section-title {
     text-align: center;
-    margin-bottom: 3rem;
     font-size: 2.5rem;
-    color: #333;
+    margin-bottom: 3rem;
+    color: #2c3e50;
+}
+
+/* Grille des cours */
+.courses-section {
+    background: #f8f9fa;
 }
 
 .tiles-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 2rem;
+    margin-top: 2rem;
 }
 
-.tile {
+.course-tile {
     background: white;
-    padding: 3rem 2rem;
-    text-align: center;
+    padding: 2.5rem;
+    border-radius: 15px;
     text-decoration: none;
-    color: #333;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease;
+    color: inherit;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    display: block;
+    opacity: 0;
+    transform: translateY(30px);
 }
 
-.tile:hover {
-    transform: translateY(-5px);
+.course-tile.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.course-tile:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+}
+
+.course-tile h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: #2c3e50;
+}
+
+.course-tile p {
+    color: #666;
+    line-height: 1.6;
 }
 
 /* Section contact */
 .contact-section {
-    padding: 4rem 0;
-    background-color: #fff;
-}
-
-.contact-section h2 {
-    text-align: center;
-    margin-bottom: 3rem;
-    font-size: 2.5rem;
-    color: #333;
+    background: white;
 }
 
 .contact-links {
     display: flex;
     justify-content: center;
     gap: 2rem;
+    flex-wrap: wrap;
 }
 
 .contact-link {
-    padding: 1rem 2rem;
-    background-color: #0077b5;
-    color: white;
+    padding: 1rem 2.5rem;
+    border-radius: 50px;
     text-decoration: none;
-    border-radius: 5px;
-    transition: background-color 0.3s ease;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    opacity: 0;
+    transform: translateY(30px);
+}
+
+.contact-link.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.contact-link.linkedin {
+    background: #0077b5;
+    color: white;
+}
+
+.contact-link.email {
+    background: #ea4335;
+    color: white;
 }
 
 .contact-link:hover {
-    background-color: #005582;
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
 }
 
 /* Bouton remontée */
 .scroll-to-top {
     position: fixed;
-    bottom: 2rem;
-    right: 2rem;
-    background-color: #333;
+    bottom: 30px;
+    right: 30px;
+    background: #2c3e50;
     color: white;
     border: none;
-    padding: 1rem;
+    width: 50px;
+    height: 50px;
     border-radius: 50%;
     cursor: pointer;
     opacity: 0;
-    transition: opacity 0.3s ease;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    font-size: 1.2rem;
+    z-index: 1000;
 }
 
 .scroll-to-top.visible {
     opacity: 1;
+    visibility: visible;
 }
 
-/* Animations de défilement */
-.section-hidden {
-    opacity: 0;
-    transform: translateY(50px);
-    transition: all 0.8s ease;
+.scroll-to-top:hover {
+    background: #34495e;
+    transform: translateY(-3px);
 }
 
-.section-visible {
-    opacity: 1;
-    transform: translateY(0);
+/* Animations */
+@keyframes fadeInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Délais d'animation pour les tuiles */
+.course-tile:nth-child(1) { transition-delay: 0.1s; }
+.course-tile:nth-child(2) { transition-delay: 0.2s; }
+.course-tile:nth-child(3) { transition-delay: 0.3s; }
+.course-tile:nth-child(4) { transition-delay: 0.4s; }
+.course-tile:nth-child(5) { transition-delay: 0.5s; }
+.course-tile:nth-child(6) { transition-delay: 0.6s; }
+
+.contact-link:nth-child(1) { transition-delay: 0.2s; }
+.contact-link:nth-child(2) { transition-delay: 0.4s; }
+
+/* Responsive */
+@media (max-width: 768px) {
+    .codex-title {
+        font-size: 3rem;
+    }
+    
+    .tiles-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .contact-links {
+        flex-direction: column;
+        align-items: center;
+    }
 }

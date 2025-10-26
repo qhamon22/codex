@@ -1,37 +1,61 @@
-// Animation de défilement pour les sections
-const observerOptions = {
-    threshold: 0.1,
-    rootMargin: '0px 0px -50px 0px'
-};
+// Animation au défilement
+function checkScroll() {
+    const sections = document.querySelectorAll('section');
+    const tiles = document.querySelectorAll('.course-tile');
+    const contactLinks = document.querySelectorAll('.contact-link');
+    const scrollButton = document.getElementById('scrollToTop');
 
-const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.classList.add('section-visible');
+    // Animation des sections
+    sections.forEach(section => {
+        const sectionTop = section.getBoundingClientRect().top;
+        const windowHeight = window.innerHeight;
+        
+        if (sectionTop < windowHeight * 0.85) {
+            section.classList.add('visible');
         }
     });
-}, observerOptions);
 
-// Observer toutes les sections
-document.querySelectorAll('section').forEach(section => {
-    section.classList.add('section-hidden');
-    observer.observe(section);
-});
+    // Animation des tuiles de cours
+    tiles.forEach(tile => {
+        const tileTop = tile.getBoundingClientRect().top;
+        const windowHeight = window.innerHeight;
+        
+        if (tileTop < windowHeight * 0.85) {
+            tile.classList.add('visible');
+        }
+    });
 
-// Bouton de remontée
-const scrollButton = document.querySelector('.scroll-to-top');
+    // Animation des liens de contact
+    contactLinks.forEach(link => {
+        const linkTop = link.getBoundingClientRect().top;
+        const windowHeight = window.innerHeight;
+        
+        if (linkTop < windowHeight * 0.85) {
+            link.classList.add('visible');
+        }
+    });
 
-window.addEventListener('scroll', () => {
+    // Bouton de remontée
     if (window.pageYOffset > 300) {
         scrollButton.classList.add('visible');
     } else {
         scrollButton.classList.remove('visible');
     }
-});
+}
 
-scrollButton.addEventListener('click', () => {
-    window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
+// Initialisation
+document.addEventListener('DOMContentLoaded', function() {
+    // Écouteur de défilement
+    window.addEventListener('scroll', checkScroll);
+    
+    // Vérifier la position au chargement
+    checkScroll();
+
+    // Bouton de remontée
+    document.getElementById('scrollToTop').addEventListener('click', function() {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
     });
 });
