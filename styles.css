@@ -12,7 +12,7 @@ body {
 
 /* Header avec photo de fond */
 .header-section {
-    background-image: url('/img/your-photo.jpg');
+    background-image: url('/img/bird.jpg');
     background-size: cover;
     background-position: center;
     height: 100vh;
